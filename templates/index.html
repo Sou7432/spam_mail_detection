@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ML Phishing Detector</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🛡️ ML-Based Phishing Detection System</h1>
+      <p class="subtitle">
+        This system uses a trained Machine Learning model to detect phishing or
+        spam messages.
+      </p>
+
+      <form method="POST">
+        <label for="message">Enter SMS / Email Text</label>
+        <textarea
+          id="message"
+          name="message"
+          placeholder="Paste the message here..."
+          required
+        >
+{{ text }}</textarea
+        >
+
+        <button type="submit">Analyze Message</button>
+      </form>
+
+      {% if result %}
+      <div class="result-box">
+        <h2>Prediction Result</h2>
+        <p>
+          <strong>Classification:</strong>
+          <span
+            class="{% if 'Phishing' in result %}danger{% else %}safe{% endif %}"
+          >
+            {{ result }}
+          </span>
+        </p>
+        <p><strong>Confidence:</strong> {{ confidence }}%</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <footer>
+      <p>Mini Project | Machine Learning | Phishing Detection</p>
+    </footer>
+  </body>
+</html>
