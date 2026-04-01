@@ -1,16 +1,19 @@
 from flask import Flask, render_template, request
 from predict import predict_text
+import os
 
 app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    result = confidence = None
+    result = None
+    confidence = None
     text = ""
 
     if request.method == "POST":
-        text = request.form["message"]
-        result, confidence = predict_text(text)
+        text = request.form.get("message", "")
+        if text:
+            result, confidence = predict_text(text)
 
     return render_template(
         "index.html",
@@ -20,4 +23,5 @@ def index():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Render provides PORT
+    app.run(host="0.0.0.0", port=port)
